@@ -1,0 +1,13 @@
+{
+  "id": "builtin.language-basics-jsx",
+  "name": "Language Basics Jsx",
+  "description": "Provides syntax highlighting and bracket matching in Jsx files.",
+  "languages": [
+    {
+      "id": "jsx",
+      "extensions": [".jsx"],
+      "tokenize": "src/tokenizeJsx.js",
+      "configuration": "./languageConfiguration.json"
+    }
+  ]
+}
