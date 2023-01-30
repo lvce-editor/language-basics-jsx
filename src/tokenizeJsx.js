@@ -484,6 +484,10 @@ export const tokenizeLine = (line, lineState) => {
         } else if ((next = part.match(RE_ANGLE_BRACKET_CLOSE))) {
           token = TokenType.PunctuationTag
           state = State.TopLevelContent
+        } else if ((next = part.match(RE_CURLY_OPEN))) {
+          token = TokenType.Punctuation
+          state = State.TopLevelContent
+          stack.push(State.InsideOpeningTag)
         } else if ((next = part.match(RE_TAG_TEXT))) {
           token = TokenType.Text
           state = State.TopLevelContent
