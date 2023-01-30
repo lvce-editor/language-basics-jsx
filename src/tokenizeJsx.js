@@ -21,6 +21,7 @@ const State = {
   InsideDoubleQuoteString: 16,
   InsideBacktickString: 17,
   AfterPropertyDot: 18,
+  InsideTag: 19,
 }
 
 /**
@@ -129,6 +130,18 @@ const RE_BACKSLASH = /^\\/
 const RE_DOLLAR_CURLY_OPEN = /^\$\{/
 const RE_DOLLAR = /^\$/
 const RE_ANYTHING = /^.+/u
+const RE_ANGLE_BRACKET_OPEN_TAG = /^<(?![\s!<=])/
+const RE_ANGLE_BRACKET_CLOSE_TAG = /^<\/(?![\s!])/
+const RE_TAGNAME = /^[!\w\:]+/
+const RE_ANGLE_BRACKET_CLOSE = /^>/
+const RE_ANGLE_BRACKET_ONLY = /^</
+const RE_ANGLE_BRACKET_OPEN = /^</
+const RE_ANY_TEXT = /^[^\n]+/
+const RE_PUNCTUATION_SELF_CLOSING = /^\/>/
+const RE_TAG_TEXT = /^[^\s>]+/
+const RE_ATTRIBUTE_NAME = /^[a-zA-Z\d\-\:]+/
+const RE_DOUBLE_QUOTE = /^"/
+const RE_ATTRIBUTE_VALUE_UNQUOTED = /^[^<>\s]+/
 
 // copied from https://github.com/PrismJS/prism/blob/master/components/prism-jsx.js#L57
 const RE_REGEX =
@@ -136,6 +149,8 @@ const RE_REGEX =
 
 const RE_VARIABLE_NAME_SPECIAL = /\p{L}/u
 const RE_VARIABLE_NAME_SPECIAL_2 = /./u
+const RE_SELF_CLOSING = /^\/>/
+const RE_TEXT = /^[^<>\n]+/
 
 export const initialLineState = {
   state: State.TopLevelContent,
@@ -143,6 +158,7 @@ export const initialLineState = {
    * @type {any[]}
    */
   stack: [],
+  tag: '',
 }
 
 export const hasArrayReturn = true
@@ -160,6 +176,8 @@ export const tokenizeLine = (line, lineState) => {
   let token = TokenType.None
   let state = lineState.state
   let stack = [...lineState.stack]
+  let tag = lineState.tag
+
   while (index < line.length) {
     const part = line.slice(index)
     switch (state) {
@@ -238,6 +256,9 @@ export const tokenizeLine = (line, lineState) => {
         } else if ((next = part.match(RE_NUMERIC))) {
           token = TokenType.Numeric
           state = State.TopLevelContent
+        } else if ((next = part.match(RE_ANGLE_BRACKET_OPEN_TAG))) {
+          token = TokenType.PunctuationTag
+          state = State.AfterOpeningAngleBracket
         } else if ((next = part.match(RE_PUNCTUATION))) {
           token = TokenType.Punctuation
           if (next[0] === '.') {
@@ -409,6 +430,148 @@ export const tokenizeLine = (line, lineState) => {
           throw new Error('no')
         }
         break
+      case State.AfterOpeningAngleBracket:
+        if ((next = part.match(RE_TAGNAME))) {
+          token = TokenType.TagName
+          state = State.InsideOpeningTag
+          tag = next[0]
+        } else if ((next = part.match(RE_SLASH))) {
+          token = TokenType.PunctuationTag
+          state = State.AfterClosingTagAngleBrackets
+        } else if ((next = part.match(RE_ANGLE_BRACKET_CLOSE))) {
+          token = TokenType.PunctuationTag
+          state = State.TopLevelContent
+        } else if ((next = part.match(RE_ANGLE_BRACKET_OPEN))) {
+          token = TokenType.PunctuationTag
+          state = State.AfterOpeningAngleBracket
+        } else if ((next = part.match(RE_ANY_TEXT))) {
+          token = TokenType.Text
+          state = State.TopLevelContent
+        } else {
+          part //?
+          throw new Error('no')
+        }
+        break
+      case State.InsideOpeningTag:
+        if ((next = part.match(RE_ANGLE_BRACKET_CLOSE))) {
+          token = TokenType.PunctuationTag
+          state = State.InsideTag
+        } else if ((next = part.match(RE_WHITESPACE))) {
+          token = TokenType.Whitespace
+          state = State.InsideOpeningTagAndHasSeenWhitespace
+        } else if ((next = part.match(RE_PUNCTUATION_SELF_CLOSING))) {
+          token = TokenType.PunctuationTag
+          state = State.TopLevelContent
+        } else if ((next = part.match(RE_TAG_TEXT))) {
+          token = TokenType.Text
+          state = State.InsideOpeningTag
+        } else {
+          part //?
+          throw new Error('no')
+        }
+        break
+      case State.InsideOpeningTagAndHasSeenWhitespace:
+        if ((next = part.match(RE_ATTRIBUTE_NAME))) {
+          token = TokenType.AttributeName
+          state = State.AfterAttributeName
+        } else if ((next = part.match(RE_SELF_CLOSING))) {
+          token = TokenType.PunctuationTag
+          state = State.TopLevelContent
+        } else if ((next = part.match(RE_ANGLE_BRACKET_CLOSE))) {
+          token = TokenType.PunctuationTag
+          state = State.TopLevelContent
+        } else if ((next = part.match(RE_TAG_TEXT))) {
+          token = TokenType.Text
+          state = State.TopLevelContent
+        } else {
+          part //?
+          throw new Error('no')
+        }
+        break
+      case State.AfterClosingTagAngleBrackets:
+        if ((next = part.match(RE_TAGNAME))) {
+          token = TokenType.TagName
+          state = State.AfterClosingTagName
+        } else if ((next = part.match(RE_WHITESPACE))) {
+          token = TokenType.Whitespace
+          state = State.TopLevelContent
+        } else if ((next = part.match(RE_ANY_TEXT))) {
+          token = TokenType.Text
+          state = State.TopLevelContent
+        } else {
+          part //?
+          throw new Error('no')
+        }
+        break
+      case State.AfterClosingTagName:
+        if ((next = part.match(RE_ANGLE_BRACKET_CLOSE))) {
+          token = TokenType.PunctuationTag
+          state = State.TopLevelContent
+        } else if ((next = part.match(RE_TEXT))) {
+          token = TokenType.Text
+          state = State.TopLevelContent
+        } else {
+          throw new Error('no')
+        }
+        break
+      case State.InsideTag:
+        if ((next = part.match(RE_TEXT))) {
+          token = TokenType.Text
+          state = State.TopLevelContent
+        } else if ((next = part.match(RE_ANGLE_BRACKET_OPEN_TAG))) {
+          token = TokenType.PunctuationTag
+          state = State.AfterOpeningAngleBracket
+        } else if ((next = part.match(RE_ANGLE_BRACKET_CLOSE_TAG))) {
+          token = TokenType.PunctuationTag
+          state = State.AfterClosingTagAngleBrackets
+        } else {
+          part
+          throw new Error('no')
+        }
+        break
+      case State.AfterAttributeName:
+        if ((next = part.match(RE_ANGLE_BRACKET_CLOSE))) {
+          token = TokenType.PunctuationTag
+          state = State.TopLevelContent
+        } else if ((next = part.match(RE_EQUAL_SIGN))) {
+          token = TokenType.Punctuation
+          state = State.AfterAttributeEqualSign
+        } else if ((next = part.match(RE_DOUBLE_QUOTE))) {
+          token = TokenType.PunctuationString
+          state = State.InsideDoubleQuoteString
+        } else if ((next = part.match(RE_SINGLE_QUOTE))) {
+          token = TokenType.PunctuationString
+          state = State.InsideSingleQuoteString
+        } else if ((next = part.match(RE_TAG_TEXT))) {
+          token = TokenType.Text
+          state = State.InsideOpeningTag
+        } else if ((next = part.match(RE_WHITESPACE))) {
+          token = TokenType.Whitespace
+          state = State.InsideOpeningTagAndHasSeenWhitespace
+        } else {
+          // TODO check quotation mark
+          part //?
+          throw new Error('no')
+        }
+        break
+      case State.AfterAttributeEqualSign:
+        if ((next = part.match(RE_DOUBLE_QUOTE))) {
+          token = TokenType.PunctuationString
+          state = State.InsideDoubleQuoteString
+        } else if ((next = part.match(RE_SINGLE_QUOTE))) {
+          token = TokenType.PunctuationString
+          state = State.InsideSingleQuoteString
+        } else if ((next = part.match(RE_ANGLE_BRACKET_CLOSE))) {
+          token = TokenType.PunctuationTag
+          state = State.TopLevelContent
+        } else if ((next = part.match(RE_ATTRIBUTE_VALUE_UNQUOTED))) {
+          token = TokenType.String
+          state = State.InsideOpeningTag
+        } else {
+          part
+          throw new Error('no')
+        }
+        break
       default:
         state
         throw new Error('no')
@@ -427,5 +590,6 @@ export const tokenizeLine = (line, lineState) => {
     state,
     tokens,
     stack,
+    tag,
   }
 }

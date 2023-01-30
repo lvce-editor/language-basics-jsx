@@ -1,9 +1,5 @@
-Punctuation
-VariableName
-Punctuation
-VariableName
-Punctuation
-VariableName
-Punctuation
-Punctuation
+PunctuationTag
+TagName
+Text
+PunctuationTag
 NewLine

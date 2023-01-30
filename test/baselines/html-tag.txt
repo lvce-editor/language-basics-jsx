@@ -1,7 +1,8 @@
 PunctuationTag
-PunctuationTag
-VariableName
-PunctuationTag
+TagName
 PunctuationTag
 Text
-NewLine
+PunctuationTag
+PunctuationTag
+TagName
+PunctuationTag
