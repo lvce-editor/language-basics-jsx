@@ -366,7 +366,7 @@ export const tokenizeLine = (line, lineState) => {
       case State.InsideDoubleQuoteString:
         if ((next = part.match(RE_QUOTE_DOUBLE))) {
           token = TokenType.Punctuation
-          state = State.TopLevelContent
+          state = stack.pop() || State.TopLevelContent
         } else if ((next = part.match(RE_STRING_DOUBLE_QUOTE_CONTENT))) {
           token = TokenType.String
           state = State.InsideDoubleQuoteString
@@ -558,9 +558,11 @@ export const tokenizeLine = (line, lineState) => {
         if ((next = part.match(RE_DOUBLE_QUOTE))) {
           token = TokenType.PunctuationString
           state = State.InsideDoubleQuoteString
+          stack.push(State.InsideOpeningTag)
         } else if ((next = part.match(RE_SINGLE_QUOTE))) {
           token = TokenType.PunctuationString
           state = State.InsideSingleQuoteString
+          stack.push(State.InsideOpeningTag)
         } else if ((next = part.match(RE_ANGLE_BRACKET_CLOSE))) {
           token = TokenType.PunctuationTag
           state = State.TopLevelContent
