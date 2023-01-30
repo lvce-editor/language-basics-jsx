@@ -1,8 +1,6 @@
 const Footer = () => {
   return (
-    <footer
-      style={{}}
-    >
+    <footer >
      {` `}test
     </footer>
   )
