@@ -1,9 +1,9 @@
-Punctuation
-VariableName
+PunctuationTag
+TagName
 Whitespace
-VariableName
+AttributeName
 Punctuation
-Punctuation
+PunctuationString
 String
 Punctuation
 Whitespace
@@ -22,8 +22,8 @@ Punctuation
 VariableName
 Punctuation
 Punctuation
-Punctuation
-Punctuation
-VariableName
-Punctuation
+PunctuationTag
+PunctuationTag
+TagName
+PunctuationTag
 NewLine
