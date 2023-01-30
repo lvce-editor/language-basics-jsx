@@ -132,7 +132,7 @@ const RE_DOLLAR = /^\$/
 const RE_ANYTHING = /^.+/u
 const RE_ANGLE_BRACKET_OPEN_TAG = /^<(?![\s!<=])/
 const RE_ANGLE_BRACKET_CLOSE_TAG = /^<\/(?![\s!])/
-const RE_TAGNAME = /^[!\w\:]+/
+const RE_TAGNAME = /^[!\w\:\.]+/
 const RE_ANGLE_BRACKET_CLOSE = /^>/
 const RE_ANGLE_BRACKET_ONLY = /^</
 const RE_ANGLE_BRACKET_OPEN = /^</
