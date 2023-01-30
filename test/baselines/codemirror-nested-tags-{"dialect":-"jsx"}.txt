@@ -3,14 +3,12 @@ TagName
 PunctuationTag
 PunctuationTag
 TagName
-Text
 PunctuationTag
 Text
 PunctuationTag
 PunctuationTag
 TagName
-Text
-Punctuation
+PunctuationTag
 Punctuation
 VariableName
 Punctuation
