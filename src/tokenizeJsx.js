@@ -291,6 +291,7 @@ export const tokenizeLine = (line, lineState) => {
           state = State.InsideSingleQuoteString
         } else if ((next = part.match(RE_QUOTE_DOUBLE))) {
           token = TokenType.Punctuation
+          stack.push(state)
           state = State.InsideDoubleQuoteString
         } else if ((next = part.match(RE_QUOTE_BACKTICK))) {
           token = TokenType.Punctuation
