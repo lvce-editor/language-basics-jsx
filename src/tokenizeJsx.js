@@ -495,6 +495,9 @@ export const tokenizeLine = (line, lineState) => {
         } else if ((next = part.match(RE_WHITESPACE))) {
           token = TokenType.Whitespace
           state = State.TopLevelContent
+        } else if ((next = part.match(RE_ANGLE_BRACKET_CLOSE))) {
+          token = TokenType.PunctuationTag
+          state = State.InsideTag
         } else if ((next = part.match(RE_ANY_TEXT))) {
           token = TokenType.Text
           state = State.TopLevelContent

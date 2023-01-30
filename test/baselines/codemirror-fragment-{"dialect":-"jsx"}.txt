@@ -3,5 +3,5 @@ PunctuationTag
 VariableName
 PunctuationTag
 PunctuationTag
-Text
+PunctuationTag
 NewLine
