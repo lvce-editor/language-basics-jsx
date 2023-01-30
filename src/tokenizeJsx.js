@@ -150,7 +150,7 @@ const RE_REGEX =
 const RE_VARIABLE_NAME_SPECIAL = /\p{L}/u
 const RE_VARIABLE_NAME_SPECIAL_2 = /./u
 const RE_SELF_CLOSING = /^\/>/
-const RE_TEXT = /^[^<>\n]+/
+const RE_TEXT = /^[^<>\n\{]+/
 
 export const initialLineState = {
   state: State.TopLevelContent,
@@ -523,13 +523,17 @@ export const tokenizeLine = (line, lineState) => {
       case State.InsideTag:
         if ((next = part.match(RE_TEXT))) {
           token = TokenType.Text
-          state = State.TopLevelContent
+          state = State.InsideTag
         } else if ((next = part.match(RE_ANGLE_BRACKET_OPEN_TAG))) {
           token = TokenType.PunctuationTag
           state = State.AfterOpeningAngleBracket
         } else if ((next = part.match(RE_ANGLE_BRACKET_CLOSE_TAG))) {
           token = TokenType.PunctuationTag
           state = State.AfterClosingTagAngleBrackets
+        } else if ((next = part.match(RE_CURLY_OPEN))) {
+          token = TokenType.Punctuation
+          state = State.TopLevelContent
+          stack.push(State.InsideTag)
         } else {
           part
           throw new Error('no')
