@@ -553,7 +553,7 @@ export const tokenizeLine = (line, lineState) => {
       case State.AfterAttributeName:
         if ((next = part.match(RE_ANGLE_BRACKET_CLOSE))) {
           token = TokenType.PunctuationTag
-          state = State.TopLevelContent
+          state = State.InsideTag
         } else if ((next = part.match(RE_EQUAL_SIGN))) {
           token = TokenType.Punctuation
           state = State.AfterAttributeEqualSign

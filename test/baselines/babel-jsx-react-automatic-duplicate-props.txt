@@ -5,7 +5,7 @@ AttributeName
 Whitespace
 AttributeName
 PunctuationTag
-VariableName
+Text
 PunctuationTag
 PunctuationTag
 TagName
@@ -72,7 +72,7 @@ Text
 Whitespace
 AttributeName
 PunctuationTag
-VariableName
+Text
 PunctuationTag
 PunctuationTag
 TagName
