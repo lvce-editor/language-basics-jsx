@@ -3,7 +3,7 @@ TagName
 Whitespace
 AttributeName
 PunctuationTag
-VariableName
+Text
 PunctuationTag
 PunctuationTag
 TagName
