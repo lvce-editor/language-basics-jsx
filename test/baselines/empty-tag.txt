@@ -2,4 +2,4 @@ PunctuationTag
 PunctuationTag
 PunctuationTag
 PunctuationTag
-Text
+PunctuationTag
