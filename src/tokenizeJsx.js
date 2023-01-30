@@ -259,6 +259,9 @@ export const tokenizeLine = (line, lineState) => {
         } else if ((next = part.match(RE_ANGLE_BRACKET_OPEN_TAG))) {
           token = TokenType.PunctuationTag
           state = State.AfterOpeningAngleBracket
+        } else if ((next = part.match(RE_CURLY_CLOSE))) {
+          token = TokenType.Punctuation
+          state = stack.pop() || State.TopLevelContent
         } else if ((next = part.match(RE_PUNCTUATION))) {
           token = TokenType.Punctuation
           if (next[0] === '.') {
@@ -569,6 +572,7 @@ export const tokenizeLine = (line, lineState) => {
         } else if ((next = part.match(RE_CURLY_OPEN))) {
           token = TokenType.Punctuation
           state = State.TopLevelContent
+          stack.push(State.InsideOpeningTag)
         } else if ((next = part.match(RE_ANGLE_BRACKET_CLOSE))) {
           token = TokenType.PunctuationTag
           state = State.TopLevelContent

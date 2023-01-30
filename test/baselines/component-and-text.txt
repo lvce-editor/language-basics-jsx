@@ -18,9 +18,9 @@ Whitespace
 Numeric
 Whitespace
 Punctuation
-Punctuation
-Punctuation
-VariableName
+Text
+PunctuationTag
+Text
 PunctuationTag
 PunctuationTag
 TagName
