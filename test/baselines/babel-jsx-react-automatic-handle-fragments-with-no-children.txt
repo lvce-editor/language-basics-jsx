@@ -1,0 +1,12 @@
+Keyword
+Whitespace
+VariableName
+Whitespace
+Punctuation
+Whitespace
+PunctuationTag
+PunctuationTag
+PunctuationTag
+PunctuationTag
+PunctuationTag
+Text
