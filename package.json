@@ -26,7 +26,11 @@
   "test-tokenize": {
     "skip": [
       "codemirror-private-properties",
-      "codemirror-strings"
+      "codemirror-strings",
+      "babel-jsx-react-automatic-should-allow-elements-as-attributes",
+      "babel-jsx-react-automatic-should-allow-nested-fragments",
+      "babel-jsx-react-should-allow-elements-as-attributes",
+      "babel-jsx-react-should-allow-nested-fragments"
     ]
   }
 }

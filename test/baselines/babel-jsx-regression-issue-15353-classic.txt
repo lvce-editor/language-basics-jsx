@@ -1,0 +1,8 @@
+PunctuationTag
+PunctuationTag
+VariableName
+PunctuationTag
+PunctuationTag
+PunctuationTag
+Text
+NewLine

@@ -1,0 +1,16 @@
+Keyword
+Whitespace
+VariableName
+Whitespace
+Punctuation
+Whitespace
+PunctuationTag
+TagName
+PunctuationTag
+Text
+PunctuationTag
+PunctuationTag
+TagName
+PunctuationTag
+Text
+NewLine

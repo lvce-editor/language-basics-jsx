@@ -1,0 +1,15 @@
+PunctuationTag
+TagName
+PunctuationTag
+Punctuation
+Punctuation
+Punctuation
+Punctuation
+VariableName
+Punctuation
+PunctuationTag
+PunctuationTag
+TagName
+PunctuationTag
+Text
+NewLine
