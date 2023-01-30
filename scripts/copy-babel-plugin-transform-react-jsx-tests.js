@@ -1,5 +1,6 @@
 import { execaCommand } from 'execa'
-import { copyFile, cp, readdir, rm } from 'node:fs/promises'
+import { createHash } from 'node:crypto'
+import { copyFile, cp, readdir, readFile, rm, stat } from 'node:fs/promises'
 import path, { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -26,27 +27,40 @@ const getTestName = (rootFolder, line) => {
   )
 }
 
-const getAllTestsInternal = async (allTests, rootFolder, folder) => {
+const getAllTestsInternal = async (
+  allTests,
+  seenHashes,
+  rootFolder,
+  folder
+) => {
   const dirents = await readdir(folder, { withFileTypes: true })
   for (const dirent of dirents) {
     const filePath = `${folder}/${dirent.name}`
     if (dirent.isDirectory()) {
-      await getAllTestsInternal(allTests, rootFolder, filePath)
-    } else {
-      if (dirent.name !== 'input.mjs' && dirent.name !== 'input.js') {
-        continue
-      }
-      const name = getTestName(rootFolder, filePath)
-      const destinationPath = join(root, 'test', 'cases', name)
-      allTests.push({ filePath, destinationPath })
+      await getAllTestsInternal(allTests, seenHashes, rootFolder, filePath)
+      continue
     }
+    if (dirent.name !== 'input.mjs' && dirent.name !== 'input.js') {
+      continue
+    }
+    const buffer = await readFile(filePath)
+    const hash = createHash('sha1').update(buffer).digest('hex')
+    if (seenHashes.includes(hash)) {
+      continue
+    }
+    seenHashes.push(hash)
+    const name = getTestName(rootFolder, filePath)
+    const destinationPath = join(root, 'test', 'cases', name)
+    allTests.push({ filePath, destinationPath })
   }
   return allTests
 }
 
 const getAllTests = async (folder) => {
   const allTests = []
-  await getAllTestsInternal(allTests, folder, folder)
+  const seenHashes = []
+  const seenContents = []
+  await getAllTestsInternal(allTests, seenHashes, folder, folder)
   return allTests
 }
 
