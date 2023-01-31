@@ -151,6 +151,7 @@ const RE_VARIABLE_NAME_SPECIAL = /\p{L}/u
 const RE_VARIABLE_NAME_SPECIAL_2 = /./u
 const RE_SELF_CLOSING = /^\/>/
 const RE_TEXT = /^[^<>\n\{\}\)]+/
+const RE_EMPTY_FRAGMENT = /^<\s*\>/
 
 export const initialLineState = {
   state: State.TopLevelContent,
@@ -545,6 +546,9 @@ export const tokenizeLine = (line, lineState) => {
         } else if ((next = part.match(RE_ROUND_CLOSE))) {
           token = TokenType.Punctuation
           state = stack.pop() || State.TopLevelContent
+        } else if ((next = part.match(RE_EMPTY_FRAGMENT))) {
+          token = TokenType.PunctuationTag
+          state = State.InsideTag
         } else {
           part
           throw new Error('no')
