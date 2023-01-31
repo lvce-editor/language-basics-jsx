@@ -152,6 +152,7 @@ const RE_VARIABLE_NAME_SPECIAL_2 = /./u
 const RE_SELF_CLOSING = /^\/>/
 const RE_TEXT = /^[^<>\n\{\}\)]+/
 const RE_EMPTY_FRAGMENT = /^<\s*\>/
+const RE_VAR_CONST_LET = /^\s*(?=(?:var|const|let)(?:\s+|$))/
 
 export const initialLineState = {
   state: State.TopLevelContent,
@@ -534,6 +535,14 @@ export const tokenizeLine = (line, lineState) => {
         if ((next = part.match(RE_TEXT))) {
           token = TokenType.Text
           state = State.InsideTag
+          if (index === 0) {
+            const match = part.match(RE_VAR_CONST_LET)
+            if (match) {
+              next = match
+              token = TokenType.Whitespace
+              state = State.TopLevelContent
+            }
+          }
         } else if ((next = part.match(RE_ANGLE_BRACKET_OPEN_TAG))) {
           token = TokenType.PunctuationTag
           state = State.AfterOpeningAngleBracket
