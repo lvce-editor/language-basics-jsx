@@ -20,7 +20,14 @@ TagName
 PunctuationTag
 NewLine
 NewLine
-Text
+Whitespace
+Keyword
+Whitespace
+Function
+Whitespace
+Punctuation
+Whitespace
+Punctuation
 Punctuation
 Whitespace
 Punctuation
