@@ -67,7 +67,7 @@ TagName
 PunctuationTag
 NewLine
 Text
-Punctuation
+Text
 NewLine
 Punctuation
 NewLine
