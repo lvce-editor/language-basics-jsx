@@ -139,7 +139,7 @@ const RE_ANGLE_BRACKET_OPEN = /^</
 const RE_ANY_TEXT = /^[^\n]+/
 const RE_PUNCTUATION_SELF_CLOSING = /^\/>/
 const RE_TAG_TEXT = /^[^\s>]+/
-const RE_ATTRIBUTE_NAME = /^[a-zA-Z\d\-\:]+/
+const RE_ATTRIBUTE_NAME = /^[a-zA-Z\d\-\:\_]+/
 const RE_DOUBLE_QUOTE = /^"/
 const RE_ATTRIBUTE_VALUE_UNQUOTED = /^[^<>\s]+/
 
