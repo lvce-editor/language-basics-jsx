@@ -1,6 +1,0 @@
-PunctuationTag
-TagName
-Whitespace
-PunctuationTag
-Punctuation
-NewLine
