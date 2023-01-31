@@ -152,7 +152,8 @@ const RE_VARIABLE_NAME_SPECIAL_2 = /./u
 const RE_SELF_CLOSING = /^\/>/
 const RE_TEXT = /^[^<>\n\{\}\)]+/
 const RE_EMPTY_FRAGMENT = /^<\s*\>/
-const RE_VAR_CONST_LET = /^\s*(?=(?:var|const|let)(?:\s+|$))/
+const RE_VAR_CONST_LET_EXPORT =
+  /^\s*(?=(?:if|class|export|var|const|let)(?:\s+|$))/
 
 export const initialLineState = {
   state: State.TopLevelContent,
@@ -536,7 +537,7 @@ export const tokenizeLine = (line, lineState) => {
           token = TokenType.Text
           state = State.InsideTag
           if (index === 0) {
-            const match = part.match(RE_VAR_CONST_LET)
+            const match = part.match(RE_VAR_CONST_LET_EXPORT)
             if (match) {
               next = match
               token = TokenType.Whitespace
