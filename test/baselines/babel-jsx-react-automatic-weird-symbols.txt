@@ -38,7 +38,7 @@ TagName
 PunctuationTag
 Text
 NewLine
-Text
+Whitespace
 Punctuation
 NewLine
 Punctuation
