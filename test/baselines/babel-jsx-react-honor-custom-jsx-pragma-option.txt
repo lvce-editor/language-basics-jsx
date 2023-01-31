@@ -8,7 +8,12 @@ PunctuationTag
 Text
 NewLine
 NewLine
-Text
+Keyword
+Whitespace
+VariableName
+Whitespace
+Punctuation
+Whitespace
 PunctuationTag
 TagName
 PunctuationTag
