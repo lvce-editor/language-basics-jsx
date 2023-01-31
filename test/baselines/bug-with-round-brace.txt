@@ -1,4 +1,3 @@
-NewLine
 Keyword
 Whitespace
 Function
@@ -35,9 +34,9 @@ TagName
 PunctuationTag
 NewLine
 Text
-Punctuation
+Text
 NewLine
-Whitespace
+Text
 PunctuationTag
 TagName
 PunctuationTag
@@ -53,12 +52,11 @@ TagName
 PunctuationTag
 NewLine
 Text
-Punctuation
+Text
 Punctuation
 NewLine
 Whitespace
-Punctuation
-Punctuation
+PunctuationTag
 NewLine
 Punctuation
 NewLine

@@ -558,8 +558,13 @@ export const tokenizeLine = (line, lineState) => {
           token = TokenType.Punctuation
           state = stack.pop() || State.TopLevelContent
         } else if ((next = part.match(RE_ROUND_CLOSE))) {
-          token = TokenType.Punctuation
-          state = stack.pop() || State.TopLevelContent
+          if (stack.length === 0) {
+            token = TokenType.Punctuation
+            state = State.TopLevelContent
+          } else {
+            token = TokenType.Text
+            state = State.InsideTag
+          }
         } else if ((next = part.match(RE_EMPTY_FRAGMENT))) {
           token = TokenType.PunctuationTag
           state = State.InsideTag

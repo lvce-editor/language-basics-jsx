@@ -1,4 +1,3 @@
-
 const WrappedComponent = () => (
   <Component
     render={() => (

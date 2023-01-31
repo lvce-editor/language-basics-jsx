@@ -30,7 +30,7 @@ Punctuation
 Punctuation
 NewLine
 Whitespace
-Punctuation
+PunctuationTag
 PunctuationTag
 PunctuationTag
 TagName

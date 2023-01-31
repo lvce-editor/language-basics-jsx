@@ -52,12 +52,11 @@ Whitespace
 Punctuation
 NewLine
 Whitespace
-Punctuation
+PunctuationTag
 NewLine
-Whitespace
-VariableName
+Text
 NewLine
-Whitespace
+Text
 PunctuationTag
 PunctuationTag
 TagName
