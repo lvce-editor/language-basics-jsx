@@ -124,7 +124,7 @@ const RE_STRING_DOUBLE_QUOTE_CONTENT = /^[^"\\]+/
 const RE_STRING_BACKTICK_QUOTE_CONTENT = /^[^`\\\$]+/
 const RE_STRING_ESCAPE = /^\\./
 const RE_SHEBANG = /^#!.*/
-const RE_FUNCTION_CALL_NAME = /^[\w]+(?=\s*(\(|\=\s*function|\=\s*\())/
+const RE_FUNCTION_CALL_NAME = /^[\w]+(?=\s*(\`|\(|\=\s*function|\=\s*\())/
 const RE_DECORATOR = /^@\w+/
 const RE_BACKSLASH = /^\\/
 const RE_DOLLAR_CURLY_OPEN = /^\$\{/

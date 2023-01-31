@@ -16,7 +16,7 @@ Whitespace
 AttributeName
 Punctuation
 Punctuation
-VariableName
+Function
 Punctuation
 NewLine
 String
