@@ -613,6 +613,9 @@ export const tokenizeLine = (line, lineState) => {
   if (state === State.InsideSingleQuoteString && !line.endsWith('\\')) {
     state = State.TopLevelContent
   }
+  if (state === State.InsideTag && line.endsWith(',')) {
+    state = stack.pop() || State.TopLevelContent
+  }
   return {
     state,
     tokens,
