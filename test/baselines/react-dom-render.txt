@@ -9,10 +9,12 @@ TagName
 PunctuationTag
 Text
 PunctuationTag
+TagName
+PunctuationTag
+PunctuationTag
 PunctuationTag
 TagName
 PunctuationTag
-Text
 NewLine
 Text
 Punctuation

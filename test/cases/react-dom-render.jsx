@@ -1,4 +1,4 @@
 ReactDOM.render(
-  <p>Hello, World!</p>,
+  <p>Hello, World!<img/></p>
   document.getElementById('root')
 );
