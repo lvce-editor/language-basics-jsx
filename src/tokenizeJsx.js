@@ -570,6 +570,7 @@ export const tokenizeLine = (line, lineState) => {
           state = State.InsideTag
         } else {
           part
+          line
           throw new Error('no')
         }
         break
