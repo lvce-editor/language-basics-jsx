@@ -22,6 +22,7 @@ const State = {
   InsideBacktickString: 17,
   AfterPropertyDot: 18,
   InsideTag: 19,
+  AfterSemicolon: 20,
 }
 
 /**
@@ -155,6 +156,8 @@ const RE_EMPTY_FRAGMENT = /^<\s*\>/
 const RE_VAR_CONST_LET_EXPORT =
   /^\s*(?=(?:if|class|export|var|const|let)(?:\s+|$))/
 
+const RE_EXPRESSION = /;\w+$/
+
 export const initialLineState = {
   state: State.TopLevelContent,
   /**
@@ -260,8 +263,13 @@ export const tokenizeLine = (line, lineState) => {
           token = TokenType.Numeric
           state = State.TopLevelContent
         } else if ((next = part.match(RE_ANGLE_BRACKET_OPEN_TAG))) {
-          token = TokenType.PunctuationTag
-          state = State.AfterOpeningAngleBracket
+          if (RE_EXPRESSION.test(line.slice(0, index))) {
+            next = part.match(RE_ANGLE_BRACKET_OPEN)
+            token = TokenType.Punctuation
+          } else {
+            token = TokenType.PunctuationTag
+            state = State.AfterOpeningAngleBracket
+          }
         } else if ((next = part.match(RE_CURLY_CLOSE))) {
           token = TokenType.Punctuation
           state = stack.pop() || State.TopLevelContent
@@ -275,7 +283,11 @@ export const tokenizeLine = (line, lineState) => {
             state = State.AfterPropertyDot
           } else if (next[0] === '}') {
             state = stack.pop() || State.TopLevelContent
-          } else {
+          }
+          // else if (next[0] === ';') {
+          // state = State.AfterSemicolon
+          // }
+          else {
             state = State.TopLevelContent
           }
         } else if ((next = part.match(RE_SLASH))) {
