@@ -28,8 +28,7 @@
       "codemirror-private-properties",
       "codemirror-strings",
       "babel-jsx-react-automatic-should-allow-elements-as-attributes",
-      "babel-jsx-react-should-allow-elements-as-attributes",
-      "classic-for-loop-and-bit-shifting"
+      "babel-jsx-react-should-allow-elements-as-attributes"
     ]
   }
 }

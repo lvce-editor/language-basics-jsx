@@ -5,9 +5,9 @@ Punctuation
 Numeric
 Punctuation
 VariableName
-PunctuationTag
-TagName
-PunctuationTag
+Punctuation
+VariableName
+Punctuation
 PunctuationTag
 PunctuationTag
 TagName
