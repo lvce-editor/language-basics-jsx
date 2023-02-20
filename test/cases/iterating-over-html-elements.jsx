@@ -1,0 +1,1 @@
+for(const tag of [<button></button>, <div></div>, <h1></h1>]){}

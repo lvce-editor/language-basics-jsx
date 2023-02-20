@@ -1,0 +1,12 @@
+KeywordControl
+Punctuation
+Keyword
+Whitespace
+VariableName
+Punctuation
+Numeric
+Punctuation
+VariableName
+PunctuationTag
+TagName
+Text
