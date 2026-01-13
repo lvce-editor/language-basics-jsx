@@ -5,9 +5,12 @@
   "languages": [
     {
       "id": "jsx",
-      "extensions": [".jsx"],
+      "extensions": [
+        ".jsx"
+      ],
       "tokenize": "src/tokenizeJsx.js",
       "configuration": "./languageConfiguration.json"
     }
-  ]
+  ],
+  "repository": "https://github.com/lvce-editor/language-basics-jsx"
 }
