@@ -31,7 +31,7 @@ const getAllTestsInternal = async (
   allTests,
   seenHashes,
   rootFolder,
-  folder
+  folder,
 ) => {
   const dirents = await readdir(folder, { withFileTypes: true })
   for (const dirent of dirents) {
@@ -74,7 +74,7 @@ const main = async () => {
   await cp(
     `${root}/.tmp/babel-transform-react-jsx/packages/babel-plugin-transform-react-jsx/test/fixtures`,
     `${root}/.tmp/babel-jsx-cases`,
-    { recursive: true }
+    { recursive: true },
   )
   const allTests = await getAllTests(`${root}/.tmp/babel-jsx-cases`)
   for (const test of allTests) {
