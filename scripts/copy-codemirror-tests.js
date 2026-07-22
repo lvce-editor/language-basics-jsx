@@ -68,7 +68,7 @@ const main = async () => {
   process.chdir(root)
   await rm(`${root}/.tmp`, { recursive: true, force: true })
   await execaCommand(
-    `git clone https://github.com/lezer-parser/js .tmp/code-mirror-js`
+    `git clone https://github.com/lezer-parser/js .tmp/code-mirror-js`,
   )
   process.chdir(`${root}/.tmp/code-mirror-js`)
   await execaCommand(`git checkout ${COMMIT}`)
@@ -76,7 +76,7 @@ const main = async () => {
   await cp(
     `${root}/.tmp/code-mirror-js/test`,
     `${root}/.tmp/code-mirror-cases`,
-    { recursive: true }
+    { recursive: true },
   )
   await rm(`${root}/.tmp/code-mirror-cases/test-js.js`)
   await rm(`${root}/.tmp/code-mirror-cases/typescript.txt`)

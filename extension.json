@@ -5,9 +5,7 @@
   "languages": [
     {
       "id": "jsx",
-      "extensions": [
-        ".jsx"
-      ],
+      "extensions": [".jsx"],
       "tokenize": "src/tokenizeJsx.js",
       "configuration": "./languageConfiguration.json"
     }
